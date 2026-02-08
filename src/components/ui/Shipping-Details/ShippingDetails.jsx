@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { Pencil, X } from "lucide-react";
 
 const LayoutWrapper = styled.div`
@@ -244,6 +245,7 @@ const CheckoutButton = styled.button`
 `;
 
 const ShippingDetails = () => {
+  const navigate = useNavigate();
   const [items, setItems] = useState([
     {
       id: 1,
@@ -280,6 +282,10 @@ const ShippingDetails = () => {
 
   const subtotal = items.reduce((acc, item) => acc + item.price * item.qty, 0);
   const total = subtotal;
+
+  const handleConfirmPayment = () => {
+    navigate("/success-paying");
+  };
 
   return (
     <LayoutWrapper>
@@ -357,7 +363,7 @@ const ShippingDetails = () => {
             <SummaryValue bold>{formatCurrency(total)}</SummaryValue>
           </SummaryRow>
 
-          <CheckoutButton>Confirm Payment</CheckoutButton>
+          <CheckoutButton onClick={handleConfirmPayment}>Confirm Payment</CheckoutButton>
         </SummaryCard>
       </Sidebar>
     </LayoutWrapper>
