@@ -114,7 +114,7 @@ const TopBar = () => {
 
   return (
     <Container>
-      <BrandLink to="/">Brand</BrandLink>
+      <BrandLink to="/">BeeConnect</BrandLink>
 
       <SearchSection>
         <SearchWrapper>

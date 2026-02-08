@@ -56,7 +56,7 @@ const Footer = () => {
   return (
     <FooterContainer>
       <CopyrightText>
-        © 2026 Brand Marketplace. All rights reserved.
+        © 2026 BeeConnect Marketplace. All rights reserved.
       </CopyrightText>
       <SocialContainer>
         <IconWrapper href="#" aria-label="Twitter">

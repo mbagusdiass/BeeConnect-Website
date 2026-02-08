@@ -89,6 +89,12 @@ npm run dev
     │   ├── 📂 Success-Paying/
     │   │   └── 📄 SuccessPaying.jsx   # ✅ Payment success
     │   │
+    │   ├── 📂 Contact/
+    │   │   └── 📄 Contact.jsx         # 📞 Contact us page
+    │   │
+    │   ├── 📂 Profile/
+    │   │   └── 📄 Profile.jsx         # 👤 User profile
+    │   │
     │   └── 📂 Unauthorized/
     │       └── 📄 Unauthorized.jsx    # ❌ 404 Not Found
     │
@@ -99,6 +105,8 @@ npm run dev
     │   ├── 📄 CheckoutPage.jsx        # 💳 Checkout page
     │   ├── 📄 ShippingDetailPage.jsx  # 🚚 Shipping page
     │   ├── 📄 SuccessPayingPage.jsx   # ✅ Success page
+    │   ├── 📄 ContactPage.jsx         # 📞 Contact us page
+    │   ├── 📄 ProfilePage.jsx         # 👤 Profile page
     │   └── 📄 UnauthorizedPage.jsx    # ❌ 404 page
     │
     └── 📂 hooks/
@@ -142,6 +150,18 @@ npm run dev
 - 🔢 Order number & details
 - 🏠 Navigation buttons
 
+### 📞 Contact Us
+- 🎨 Hero section with gradient background
+- 📧 Contact info cards (Email, Phone, Address, Hours)
+- 📝 Contact form with validation
+- ❓ FAQ section with common questions
+
+### 👤 Profile Page
+- 🎨 User header with avatar & stats
+- 📊 Stats grid (Orders, Wishlist, Addresses)
+- 📋 Sidebar menu navigation
+- ✏️ Editable personal info form
+
 ### ❌ 404 Page
 - ⚠️ Error icon & 404 code
 - 📝 "Page Not Found" message
@@ -160,6 +180,8 @@ npm run dev
 | `/checkout` | Checkout | 💳 Payment & delivery options |
 | `/shipping-details` | Shipping Details | 🚚 Review order |
 | `/success-paying` | Success | ✅ Payment confirmation |
+| `/contact` | Contact | 📞 Contact us & FAQ |
+| `/profile` | Profile | 👤 User profile & settings |
 | `*` | Unauthorized | ❌ 404 Not Found (catch-all) |
 
 ### 🔄 User Flow
@@ -169,7 +191,11 @@ npm run dev
 │ Home │────▶│ Product │────▶│ Cart │────▶│ Checkout │────▶│ Shipping    │────▶│ Success │
 │  🏠  │     │   📦    │     │  🛒  │     │    💳    │     │     🚚      │     │   ✅    │
 └──────┘     └─────────┘     └──────┘     └──────────┘     └─────────────┘     └─────────┘
-                                                                                    
+     │
+     ├──────▶ 👤 Profile (View/Edit user data)
+     │
+     └──────▶ 📞 Contact (Get help & FAQ)
+     
                           Invalid URL → 404 Unauthorized Page ❌
 ```
 
