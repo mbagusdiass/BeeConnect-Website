@@ -15,7 +15,7 @@
 
 ---
 
-##  Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -66,11 +66,14 @@ npm run dev
     ├── 📂 assets/               # 🖼️ Static assets
     │
     ├── 📂 components/ui/
-    │   ├── 📄 Topbar.jsx              # 🔝 Sticky navigation bar
+    │   ├── 📄 Topbar.jsx              # 🔝 Fixed navigation bar
     │   ├── 📄 Footer.jsx              # 📝 Footer component
     │   │
     │   ├── 📂 Home/
     │   │   └── 📄 Home.jsx            # 🏠 Homepage (hero + products)
+    │   │
+    │   ├── 📂 Info-Product/
+    │   │   └── 📄 InfoProduct.jsx     # 📦 Product detail view
     │   │
     │   ├── 📂 Shopping-Cart/
     │   │   ├── 📄 ShoppingCart.jsx    # 🛒 Cart container
@@ -88,6 +91,7 @@ npm run dev
     │
     ├── 📂 pages/
     │   ├── 📄 HomePage.jsx            # 🏠 Home page
+    │   ├── 📄 InfoProductPage.jsx     # 📦 Product detail page
     │   ├── 📄 ShoppingCartPage.jsx    # 🛒 Cart page
     │   ├── 📄 CheckoutPage.jsx        # 💳 Checkout page
     │   ├── 📄 ShippingDetailPage.jsx  # 🚚 Shipping page
@@ -103,23 +107,31 @@ npm run dev
 
 ### 🏠 Home Page
 - 🎬 Hero section with iPhone 14 Pro showcase
-- � Category tabs (All, Fashion, Books, Electronics)
-- 🔥 Popular products grid
+- 📂 Category tabs (All, Fashion, Books, Electronics)
+- 🔥 Popular products grid (clickable)
 
-### �🛒 Shopping Cart
+### 📦 Product Detail
+- 🖼️ Large product image with wishlist button
+- 📷 Thumbnail gallery
+- ⭐ Rating & reviews count
+- 📝 Description with "Read all"
+- 🛒 "Ask Seller" & "Add to Cart" buttons
+
+### 🛒 Shopping Cart
 - ➕ Add/remove items with quantity controls
 - 💰 Real-time total calculation
-- 🖼️ Product image preview
+- ✅ Checkout button → redirects to /checkout
 
 ### 💳 Checkout
 - 📍 Address selection with edit/delete
 - 🚚 Delivery method options
 - 💳 Payment methods (Bank, E-Wallet, Credit Card)
+- ⬅️ Back & ➡️ Next buttons
 
 ### 🚚 Shipping Details
 - 📋 Order summary review
 - 📦 Product list with quantities
-- ✅ Confirm payment button
+- ✅ Confirm Payment → redirects to success
 
 ### ✅ Success Page
 - 🎉 Payment confirmation message
@@ -132,8 +144,9 @@ npm run dev
 
 | Route | Page | Description |
 |-------|------|-------------|
-| `/` | Home | 🏠 Landing page with hero & products |
+| `/` | Home | 🏠 Landing page |
 | `/home` | Home | 🏠 Alternative home URL |
+| `/product/:id` | Product Detail | 📦 View product info |
 | `/cart` | Shopping Cart | 🛒 View cart items |
 | `/checkout` | Checkout | 💳 Payment & delivery options |
 | `/shipping-details` | Shipping Details | 🚚 Review order |
@@ -142,11 +155,26 @@ npm run dev
 ### 🔄 User Flow
 
 ```
-┌──────────┐     ┌──────────┐     ┌──────────┐     ┌────────────────┐     ┌─────────┐
-│   Home   │────▶│   Cart   │────▶│ Checkout │────▶│ Shipping Detail│────▶│ Success │
-│    🏠    │     │    🛒    │     │    💳    │     │       🚚       │     │    ✅   │
-└──────────┘     └──────────┘     └──────────┘     └────────────────┘     └─────────┘
+┌──────┐     ┌─────────┐     ┌──────┐     ┌──────────┐     ┌─────────────┐     ┌─────────┐
+│ Home │────▶│ Product │────▶│ Cart │────▶│ Checkout │────▶│ Shipping    │────▶│ Success │
+│  🏠  │     │   📦    │     │  🛒  │     │    💳    │     │     🚚      │     │   ✅    │
+└──────┘     └─────────┘     └──────┘     └──────────┘     └─────────────┘     └─────────┘
 ```
+
+---
+
+## 🧭 Navigation (Topbar)
+
+| Link | Route | Active When |
+|------|-------|-------------|
+| **Brand** | `/` | - |
+| **Home** | `/home` | `/` or `/home` |
+| **Cart** | `/cart` | `/cart`, `/checkout`, `/shipping-details`, `/success-paying` |
+| **Profile** | `/profile` | `/profile` |
+| **Contact us** | `/contact` | `/contact` |
+
+- 📌 **Fixed Position**: Topbar always stays at top when scrolling
+- 🎯 **Active State**: Current page link is bold & black
 
 ---
 

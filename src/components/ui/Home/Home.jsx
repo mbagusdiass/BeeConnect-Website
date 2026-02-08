@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -8,7 +9,6 @@ const Container = styled.div`
     Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 `;
 
-// Hero Section
 const HeroSection = styled.section`
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
   padding: 4rem 5rem;
@@ -132,7 +132,6 @@ const PhoneDate = styled.div`
   margin-bottom: 1rem;
 `;
 
-// Categories Section
 const CategoriesSection = styled.section`
   padding: 3rem 5rem;
   background: #fff;
@@ -172,7 +171,6 @@ const CategoryTab = styled.button`
   }
 `;
 
-// Popular Section
 const PopularSection = styled.section`
   padding: 0 5rem 4rem;
   background: #fff;
@@ -265,7 +263,12 @@ const ProductPrice = styled.p`
 `;
 
 const Home = () => {
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("Fashion");
+
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}`);
+  };
 
   const categories = ["All", "Fashion", "Books", "Electronics"];
 
@@ -349,7 +352,7 @@ const Home = () => {
 
         <ProductGrid>
           {products.map((product) => (
-            <ProductCard key={product.id}>
+            <ProductCard key={product.id} onClick={() => handleProductClick(product.id)}>
               <ProductImageWrapper>
                 <ProductImage src={product.image} alt={product.name} />
               </ProductImageWrapper>

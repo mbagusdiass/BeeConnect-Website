@@ -102,8 +102,12 @@ const TopBar = () => {
   const currentPath = location.pathname;
 
   const isActive = (path) => {
-    if (path === "/") {
+    if (path === "/home") {
       return currentPath === "/" || currentPath === "/home";
+    }
+    if (path === "/cart") {
+      const cartRoutes = ["/cart", "/checkout", "/shipping-details", "/success-paying"];
+      return cartRoutes.some(route => currentPath === route || currentPath.startsWith(route));
     }
     return currentPath === path || currentPath.startsWith(path);
   };
@@ -122,7 +126,7 @@ const TopBar = () => {
       </SearchSection>
 
       <NavLinks>
-        <NavItem to="/" $active={isActive("/")}>
+        <NavItem to="/home" $active={isActive("/home")}>
           Home
         </NavItem>
         <NavItem to="/cart" $active={isActive("/cart")}>
