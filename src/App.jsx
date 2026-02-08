@@ -9,13 +9,17 @@ import InfoProductPage from "./pages/InfoProductPage";
 import UnauthorizedPage from "./pages/UnauthorizedPage";
 import ContactPage from "./pages/ContactPage";
 import ProfilePage from "./pages/ProfilePage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import "./App.css";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/product/:id" element={<InfoProductPage />} />
         <Route path="/cart" element={<ShoppingCartPage />} />
@@ -31,3 +35,4 @@ function App() {
 }
 
 export default App;
+

@@ -95,6 +95,12 @@ npm run dev
     │   ├── 📂 Profile/
     │   │   └── 📄 Profile.jsx         # 👤 User profile
     │   │
+    │   ├── 📂 Login/
+    │   │   └── 📄 Login.jsx           # 🔐 Login form
+    │   │
+    │   ├── 📂 Register/
+    │   │   └── 📄 Register.jsx        # 📝 Registration form
+    │   │
     │   └── 📂 Unauthorized/
     │       └── 📄 Unauthorized.jsx    # ❌ 404 Not Found
     │
@@ -107,6 +113,8 @@ npm run dev
     │   ├── 📄 SuccessPayingPage.jsx   # ✅ Success page
     │   ├── 📄 ContactPage.jsx         # 📞 Contact us page
     │   ├── 📄 ProfilePage.jsx         # 👤 Profile page
+    │   ├── 📄 LoginPage.jsx           # 🔐 Login page
+    │   ├── 📄 RegisterPage.jsx        # 📝 Register page
     │   └── 📄 UnauthorizedPage.jsx    # ❌ 404 page
     │
     └── 📂 hooks/
@@ -116,6 +124,21 @@ npm run dev
 ---
 
 ## 🎯 Features
+
+### 🔐 Login Page
+- 🎨 Modern gradient background
+- 📧 Email & password input with icons
+- 👁️ Password visibility toggle
+- ✅ Remember me checkbox
+- 🔗 Social login (Google, Facebook)
+- 📝 Link to register page
+
+### 📝 Register Page
+- 📋 Full registration form (name, email, phone)
+- 🔒 Password with strength indicator
+- ✅ Terms & conditions checkbox
+- 🔗 Social registration options
+- 📝 Link to login page
 
 ### 🏠 Home Page
 - 🎬 Hero section with iPhone 14 Pro showcase
@@ -173,8 +196,10 @@ npm run dev
 
 | Route | Page | Description |
 |-------|------|-------------|
-| `/` | Home | 🏠 Landing page |
-| `/home` | Home | 🏠 Alternative home URL |
+| `/` | Login | 🔐 Default landing (login page) |
+| `/login` | Login | 🔐 User login form |
+| `/register` | Register | 📝 New user registration |
+| `/home` | Home | 🏠 Main shopping page |
 | `/product/:id` | Product Detail | 📦 View product info |
 | `/cart` | Shopping Cart | 🛒 View cart items |
 | `/checkout` | Checkout | 💳 Payment & delivery options |
@@ -187,14 +212,16 @@ npm run dev
 ### 🔄 User Flow
 
 ```
-┌──────┐     ┌─────────┐     ┌──────┐     ┌──────────┐     ┌─────────────┐     ┌─────────┐
-│ Home │────▶│ Product │────▶│ Cart │────▶│ Checkout │────▶│ Shipping    │────▶│ Success │
-│  🏠  │     │   📦    │     │  🛒  │     │    💳    │     │     🚚      │     │   ✅    │
-└──────┘     └─────────┘     └──────┘     └──────────┘     └─────────────┘     └─────────┘
-     │
-     ├──────▶ 👤 Profile (View/Edit user data)
-     │
-     └──────▶ 📞 Contact (Get help & FAQ)
+┌───────┐     ┌──────┐     ┌─────────┐     ┌──────┐     ┌──────────┐     ┌─────────────┐     ┌─────────┐
+│ Login │────▶│ Home │────▶│ Product │────▶│ Cart │────▶│ Checkout │────▶│ Shipping    │────▶│ Success │
+│  🔐   │     │  🏠  │     │   📦    │     │  🛒  │     │    💳    │     │     🚚      │     │   ✅    │
+└───────┘     └──────┘     └─────────┘     └──────┘     └──────────┘     └─────────────┘     └─────────┘
+    │              │
+    │              ├──────▶ 👤 Profile (View/Edit user data)
+    │              │
+    │              └──────▶ 📞 Contact (Get help & FAQ)
+    │
+    └──────▶ 📝 Register (Create new account)
      
                           Invalid URL → 404 Unauthorized Page ❌
 ```
