@@ -1,13 +1,56 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
+import { Loader } from "lucide-react";
 import TopBar from "../components/ui/Topbar";
 import Footer from "../components/ui/Footer";
 import InfoProduct from "../components/ui/Info-Product/InfoProduct";
+import useProducts from "../hooks/useProducts";
+
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  gap: 1rem;
+  color: #666;
+  min-height: 400px;
+`;
+
+const SpinnerIcon = styled(Loader)`
+  animation: spin 1s linear infinite;
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+const ErrorContainer = styled.div`
+  text-align: center;
+  padding: 2rem;
+  color: #dc2626;
+  background: #fee2e2;
+  border-radius: 12px;
+  margin: 2rem;
+`;
 
 const InfoProductPage = () => {
   const { id } = useParams();
+  const { product, loading, error, getProductById } = useProducts();
 
-  const products = {
+  useEffect(() => {
+    if (id) {
+      getProductById(id);
+    }
+  }, [id, getProductById]);
+
+  const fallbackProducts = {
     1: {
       id: 1,
       name: "Street Flow Tee",
@@ -44,14 +87,53 @@ const InfoProductPage = () => {
     },
   };
 
-  const product = products[id] || products[1];
+  const transformProduct = (apiProduct) => {
+    if (!apiProduct) return null;
+    
+    const formatPrice = (price) => {
+      if (typeof price === 'string') return price;
+      return `Rp ${price?.toLocaleString("id-ID") || 0},00`;
+    };
+
+    return {
+      id: apiProduct._id || apiProduct.id,
+      name: apiProduct.name,
+      variant: apiProduct.description || "Premium quality product",
+      price: formatPrice(apiProduct.price),
+      rating: apiProduct.rating || 5,
+      reviewCount: apiProduct.review_count || "0",
+      description: apiProduct.description || "No description available.",
+      image: apiProduct.image_url || apiProduct.image,
+      thumbnails: apiProduct.thumbnails || [
+        apiProduct.image_url || apiProduct.image,
+        apiProduct.image_url || apiProduct.image,
+        apiProduct.image_url || apiProduct.image,
+        apiProduct.image_url || apiProduct.image,
+      ],
+    };
+  };
+
+  const displayProduct = product 
+    ? transformProduct(product) 
+    : (loading ? null : fallbackProducts[id] || fallbackProducts[1]);
 
   return (
     <div className="page">
       <TopBar />
 
       <main className="main-content">
-        <InfoProduct product={product} />
+        {loading ? (
+          <LoadingContainer>
+            <SpinnerIcon size={32} />
+            <p>Memuat detail produk...</p>
+          </LoadingContainer>
+        ) : error ? (
+          <ErrorContainer>
+            {error}
+          </ErrorContainer>
+        ) : (
+          <InfoProduct product={displayProduct} />
+        )}
       </main>
 
       <Footer />

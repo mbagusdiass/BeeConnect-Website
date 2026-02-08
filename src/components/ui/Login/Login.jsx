@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
-import { Mail, Lock, Eye, EyeOff, LogIn, ArrowRight } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, LogIn, Loader } from "lucide-react";
+import useAuth from "../../../hooks/useAuth";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -147,14 +148,28 @@ const LoginButton = styled.button`
   transition: transform 0.2s, box-shadow 0.2s;
   margin-top: 0.5rem;
 
-  &:hover {
+  &:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
   }
 
-  &:active {
+  &:active:not(:disabled) {
     transform: translateY(0);
   }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-align: center;
 `;
 
 const Divider = styled.div`
@@ -218,8 +233,22 @@ const RegisterLink = styled.p`
   }
 `;
 
+const SpinnerIcon = styled(Loader)`
+  animation: spin 1s linear infinite;
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
 const Login = () => {
   const navigate = useNavigate();
+  const { login, loading, error, setError } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -233,12 +262,15 @@ const Login = () => {
       ...formData,
       [name]: type === "checkbox" ? checked : value,
     });
+    if (error) setError(null);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    navigate("/home");
+    const result = await login(formData.email, formData.password);
+    if (result.success) {
+      navigate("/home");
+    }
   };
 
   return (
@@ -248,6 +280,8 @@ const Login = () => {
         <Subtitle>Selamat datang kembali! Silakan masuk ke akun Anda</Subtitle>
 
         <Form onSubmit={handleSubmit}>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+          
           <InputGroup>
             <InputIcon>
               <Mail size={20} />
@@ -259,6 +293,7 @@ const Login = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </InputGroup>
 
@@ -273,6 +308,7 @@ const Login = () => {
               value={formData.password}
               onChange={handleChange}
               required
+              disabled={loading}
             />
             <PasswordToggle
               type="button"
@@ -289,15 +325,25 @@ const Login = () => {
                 name="remember"
                 checked={formData.remember}
                 onChange={handleChange}
+                disabled={loading}
               />
               Ingat saya
             </CheckboxLabel>
             <ForgotLink href="#">Lupa kata sandi?</ForgotLink>
           </RememberRow>
 
-          <LoginButton type="submit">
-            <LogIn size={20} />
-            Masuk
+          <LoginButton type="submit" disabled={loading}>
+            {loading ? (
+              <>
+                <SpinnerIcon size={20} />
+                Memproses...
+              </>
+            ) : (
+              <>
+                <LogIn size={20} />
+                Masuk
+              </>
+            )}
           </LoginButton>
         </Form>
 

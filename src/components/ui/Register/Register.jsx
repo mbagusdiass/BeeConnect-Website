@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
-import { Mail, Lock, Eye, EyeOff, User, Phone, UserPlus, Check } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, User, Calendar, UserPlus, Loader } from "lucide-react";
+import useAuth from "../../../hooks/useAuth";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -22,6 +23,8 @@ const RegisterCard = styled.div`
   width: 100%;
   max-width: 480px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  max-height: 90vh;
+  overflow-y: auto;
 `;
 
 const Logo = styled.h1`
@@ -45,7 +48,7 @@ const Subtitle = styled.p`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
 `;
 
 const InputRow = styled.div`
@@ -89,6 +92,35 @@ const Input = styled.input`
 
   &::placeholder {
     color: #aaa;
+  }
+
+  &:disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+  }
+`;
+
+const Select = styled.select`
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 2px solid #f0f0f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  background: white;
+  cursor: pointer;
+  appearance: none;
+
+  &:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  }
+
+  &:disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
   }
 `;
 
@@ -175,12 +207,12 @@ const RegisterButton = styled.button`
   transition: transform 0.2s, box-shadow 0.2s;
   margin-top: 0.5rem;
 
-  &:hover {
+  &:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
   }
 
-  &:active {
+  &:active:not(:disabled) {
     transform: translateY(0);
   }
 
@@ -189,6 +221,24 @@ const RegisterButton = styled.button`
     cursor: not-allowed;
     transform: none;
   }
+`;
+
+const ErrorMessage = styled.div`
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+`;
+
+const SuccessMessage = styled.div`
+  background: #dcfce7;
+  color: #16a34a;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-align: center;
 `;
 
 const Divider = styled.div`
@@ -252,17 +302,34 @@ const LoginLink = styled.p`
   }
 `;
 
+const SpinnerIcon = styled(Loader)`
+  animation: spin 1s linear infinite;
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
 const Register = () => {
   const navigate = useNavigate();
+  const { register, loading, error, setError } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
+    username: "",
     email: "",
-    phone: "",
     password: "",
     confirmPassword: "",
+    date_of_birth: "",
+    gender: "",
+    role: "buyer",
     agreeTerms: false,
   });
 
@@ -272,6 +339,8 @@ const Register = () => {
       ...formData,
       [name]: type === "checkbox" ? checked : value,
     });
+    if (error) setError(null);
+    if (success) setSuccess(false);
   };
 
   const getPasswordStrength = () => {
@@ -296,14 +365,29 @@ const Register = () => {
 
   const passwordStrength = getPasswordStrength();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if (formData.password !== formData.confirmPassword) {
-      alert("Kata sandi tidak cocok!");
+      setError("Kata sandi tidak cocok!");
       return;
     }
-    // Handle registration logic here
-    navigate("/login");
+
+    const registerData = {
+      name: formData.name,
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+      date_of_birth: formData.date_of_birth,
+      gender: formData.gender,
+      role: formData.role,
+    };
+
+    const result = await register(registerData);
+    if (result.success) {
+      setSuccess(true);
+      setTimeout(() => navigate("/login"), 1500);
+    }
   };
 
   return (
@@ -313,6 +397,9 @@ const Register = () => {
         <Subtitle>Buat akun baru untuk mulai berbelanja</Subtitle>
 
         <Form onSubmit={handleSubmit}>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+          {success && <SuccessMessage>Registrasi berhasil! Mengalihkan ke halaman login...</SuccessMessage>}
+
           <InputRow>
             <InputGroup>
               <InputIcon>
@@ -320,11 +407,12 @@ const Register = () => {
               </InputIcon>
               <Input
                 type="text"
-                name="firstName"
-                placeholder="Nama Depan"
-                value={formData.firstName}
+                name="name"
+                placeholder="Nama Lengkap"
+                value={formData.name}
                 onChange={handleChange}
                 required
+                disabled={loading}
               />
             </InputGroup>
 
@@ -334,11 +422,12 @@ const Register = () => {
               </InputIcon>
               <Input
                 type="text"
-                name="lastName"
-                placeholder="Nama Belakang"
-                value={formData.lastName}
+                name="username"
+                placeholder="Username"
+                value={formData.username}
                 onChange={handleChange}
                 required
+                disabled={loading}
               />
             </InputGroup>
           </InputRow>
@@ -354,21 +443,58 @@ const Register = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </InputGroup>
 
+          <InputRow>
+            <InputGroup>
+              <InputIcon>
+                <Calendar size={20} />
+              </InputIcon>
+              <Input
+                type="date"
+                name="date_of_birth"
+                placeholder="Tanggal Lahir"
+                value={formData.date_of_birth}
+                onChange={handleChange}
+                required
+                disabled={loading}
+              />
+            </InputGroup>
+
+            <InputGroup>
+              <InputIcon>
+                <User size={20} />
+              </InputIcon>
+              <Select
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                required
+                disabled={loading}
+              >
+                <option value="">Pilih Gender</option>
+                <option value="Male">Laki-laki</option>
+                <option value="Female">Perempuan</option>
+              </Select>
+            </InputGroup>
+          </InputRow>
+
           <InputGroup>
             <InputIcon>
-              <Phone size={20} />
+              <User size={20} />
             </InputIcon>
-            <Input
-              type="tel"
-              name="phone"
-              placeholder="Nomor Telepon"
-              value={formData.phone}
+            <Select
+              name="role"
+              value={formData.role}
               onChange={handleChange}
               required
-            />
+              disabled={loading}
+            >
+              <option value="buyer">Pembeli</option>
+              <option value="seller">Penjual</option>
+            </Select>
           </InputGroup>
 
           <InputGroup>
@@ -382,6 +508,7 @@ const Register = () => {
               value={formData.password}
               onChange={handleChange}
               required
+              disabled={loading}
             />
             <PasswordToggle
               type="button"
@@ -419,6 +546,7 @@ const Register = () => {
               value={formData.confirmPassword}
               onChange={handleChange}
               required
+              disabled={loading}
             />
             <PasswordToggle
               type="button"
@@ -435,6 +563,7 @@ const Register = () => {
               checked={formData.agreeTerms}
               onChange={handleChange}
               required
+              disabled={loading}
             />
             <span>
               Saya menyetujui <a href="#">Syarat & Ketentuan</a> dan{" "}
@@ -442,9 +571,18 @@ const Register = () => {
             </span>
           </TermsLabel>
 
-          <RegisterButton type="submit" disabled={!formData.agreeTerms}>
-            <UserPlus size={20} />
-            Daftar Sekarang
+          <RegisterButton type="submit" disabled={!formData.agreeTerms || loading}>
+            {loading ? (
+              <>
+                <SpinnerIcon size={20} />
+                Memproses...
+              </>
+            ) : (
+              <>
+                <UserPlus size={20} />
+                Daftar Sekarang
+              </>
+            )}
           </RegisterButton>
         </Form>
 

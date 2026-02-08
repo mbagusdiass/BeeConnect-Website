@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "lucide-react";
+import useProducts from "../../../hooks/useProducts";
+import useCategories from "../../../hooks/useCategories";
 
 const Container = styled.div`
   width: 100%;
@@ -262,50 +265,105 @@ const ProductPrice = styled.p`
   margin: 0;
 `;
 
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  gap: 1rem;
+  color: #666;
+`;
+
+const SpinnerIcon = styled(Loader)`
+  animation: spin 1s linear infinite;
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+const ErrorContainer = styled.div`
+  text-align: center;
+  padding: 2rem;
+  color: #dc2626;
+  background: #fee2e2;
+  border-radius: 12px;
+  margin: 1rem 0;
+`;
+
 const Home = () => {
   const navigate = useNavigate();
-  const [activeCategory, setActiveCategory] = useState("Fashion");
+  const { products, loading: productsLoading, error: productsError, getProducts } = useProducts();
+  const { categories, loading: categoriesLoading, getCategories } = useCategories();
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  useEffect(() => {
+    getProducts();
+    getCategories();
+  }, [getProducts, getCategories]);
 
   const handleProductClick = (productId) => {
     navigate(`/product/${productId}`);
   };
 
-  const categories = ["All", "Fashion", "Books", "Electronics"];
+  const categoryList = categories.length > 0 
+    ? ["All", ...categories.map(c => c.category_name || c.name)]
+    : ["All", "Fashion", "Books", "Electronics"];
 
-  const products = [
+  const filteredProducts = activeCategory === "All" 
+    ? products 
+    : products.filter(p => 
+        p.category?.category_name === activeCategory || 
+        p.category?.name === activeCategory ||
+        p.category_id?.category_name === activeCategory
+      );
+
+  const fallbackProducts = [
     {
-      id: 1,
+      _id: 1,
       name: "Street Flow Tee",
-      variant: "Oversized clean drip",
-      price: "Rp. 60.000,00",
-      image: "https://image.made-in-china.com/318f0j00obnYTsjcMqlw/12-mp4.webp",
+      description: "Oversized clean drip",
+      price: 60000,
+      image_url: "https://image.made-in-china.com/318f0j00obnYTsjcMqlw/12-mp4.webp",
     },
     {
-      id: 2,
+      _id: 2,
       name: "FlexMode Hoodie",
-      variant: "Built for daily flex",
-      price: "Rp.150.000,00",
-      image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=300&auto=format&fit=crop",
+      description: "Built for daily flex",
+      price: 150000,
+      image_url: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=300&auto=format&fit=crop",
     },
     {
-      id: 3,
+      _id: 3,
       name: "Street Flow Tee",
-      variant: "Oversized clean drip",
-      price: "Rp. 60.000,00",
-      image: "https://image.made-in-china.com/318f0j00obnYTsjcMqlw/12-mp4.webp",
+      description: "Oversized clean drip",
+      price: 60000,
+      image_url: "https://image.made-in-china.com/318f0j00obnYTsjcMqlw/12-mp4.webp",
     },
     {
-      id: 4,
+      _id: 4,
       name: "FlexMode Hoodie",
-      variant: "Built for daily flex",
-      price: "Rp.150.000,00",
-      image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=300&auto=format&fit=crop",
+      description: "Built for daily flex",
+      price: 150000,
+      image_url: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=300&auto=format&fit=crop",
     },
   ];
 
+  const displayProducts = filteredProducts.length > 0 ? filteredProducts : (productsLoading ? [] : fallbackProducts);
+
+  const formatPrice = (price) => {
+    if (typeof price === 'string') return price;
+    return `Rp.${price?.toLocaleString("id-ID") || 0},00`;
+  };
+
   return (
     <Container>
-      {/* Hero Section */}
       <HeroSection>
         <HeroContent>
           <ProBeyond>Pro.Beyond.</ProBeyond>
@@ -327,11 +385,10 @@ const Home = () => {
         </HeroImageContainer>
       </HeroSection>
 
-      {/* Categories Section */}
       <CategoriesSection>
         <SectionTitle>Categories</SectionTitle>
         <CategoryTabs>
-          {categories.map((category) => (
+          {categoryList.map((category) => (
             <CategoryTab
               key={category}
               $active={activeCategory === category}
@@ -343,28 +400,39 @@ const Home = () => {
         </CategoryTabs>
       </CategoriesSection>
 
-      {/* Popular Section */}
       <PopularSection>
         <PopularHeader>
           <SectionTitle style={{ margin: 0 }}>Popular</SectionTitle>
           <SeeAllLink href="#">See all</SeeAllLink>
         </PopularHeader>
 
-        <ProductGrid>
-          {products.map((product) => (
-            <ProductCard key={product.id} onClick={() => handleProductClick(product.id)}>
-              <ProductImageWrapper>
-                <ProductImage src={product.image} alt={product.name} />
-              </ProductImageWrapper>
-              <ProductName>{product.name}</ProductName>
-              <ProductVariant>{product.variant}</ProductVariant>
-              <ProductPrice>{product.price}</ProductPrice>
-            </ProductCard>
-          ))}
-        </ProductGrid>
+        {productsLoading ? (
+          <LoadingContainer>
+            <SpinnerIcon size={32} />
+            <p>Memuat produk...</p>
+          </LoadingContainer>
+        ) : productsError ? (
+          <ErrorContainer>
+            {productsError}
+          </ErrorContainer>
+        ) : (
+          <ProductGrid>
+            {displayProducts.map((product) => (
+              <ProductCard key={product._id || product.id} onClick={() => handleProductClick(product._id || product.id)}>
+                <ProductImageWrapper>
+                  <ProductImage src={product.image_url || product.image} alt={product.name} />
+                </ProductImageWrapper>
+                <ProductName>{product.name}</ProductName>
+                <ProductVariant>{product.description || product.variant}</ProductVariant>
+                <ProductPrice>{formatPrice(product.price)}</ProductPrice>
+              </ProductCard>
+            ))}
+          </ProductGrid>
+        )}
       </PopularSection>
     </Container>
   );
 };
 
 export default Home;
+

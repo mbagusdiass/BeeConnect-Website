@@ -34,9 +34,26 @@ cd beeconnect-frontend
 # Install dependencies
 npm install
 
+# Create environment file
+cp .env.example .env
+
+# Configure your API base URL in .env
+# VITE_API_BASE_URL=http://localhost:5000
+
 # Start development server
 npm run dev
 ```
+
+### Environment Setup
+
+Create a `.env` file in the root directory:
+
+```env
+# API Configuration
+VITE_API_BASE_URL=http://localhost:5000
+```
+
+> ⚠️ **Note:** The `.env` file is gitignored. Make sure to create it locally.
 
 ### Available Scripts
 
@@ -117,8 +134,16 @@ npm run dev
     │   ├── 📄 RegisterPage.jsx        # 📝 Register page
     │   └── 📄 UnauthorizedPage.jsx    # ❌ 404 page
     │
+    ├── 📂 api/
+    │   └── 📄 axiosInstance.js        # 🔌 Axios config with JWT
+    │
     └── 📂 hooks/
-        └── 📄 useCart.js              # 🎣 Cart custom hook
+        ├── 📄 useAuth.js              # 🔐 Authentication hook
+        ├── 📄 useProducts.js          # 📦 Products CRUD hook
+        ├── 📄 useCategories.js        # 📂 Categories CRUD hook
+        ├── 📄 useSellers.js           # 🏪 Sellers management hook
+        ├── 📄 useAdmin.js             # 👑 Admin operations hook
+        └── 📄 useCart.js              # 🛒 Cart custom hook
 ```
 
 ---
@@ -240,6 +265,42 @@ npm run dev
 
 - 📌 **Fixed Position**: Topbar always stays at top when scrolling
 - 🎯 **Active State**: Current page link is bold & black
+
+---
+
+## 🔌 API Integration
+
+This frontend connects to a backend API for authentication, products, categories, sellers, and admin operations.
+
+### Custom Hooks
+
+| Hook | Purpose | Methods |
+|------|---------|---------|
+| `useAuth` | Authentication | `login()`, `register()`, `logout()`, `isAuthenticated()` |
+| `useProducts` | Product management | `getProducts()`, `getProductById()`, `createProduct()`, `updateProduct()` |
+| `useCategories` | Category CRUD | `getCategories()`, `createCategory()`, `updateCategory()`, `deleteCategory()` |
+| `useSellers` | Seller management | `getSellers()`, `registerShop()`, `updateSeller()`, `deleteSeller()` |
+| `useAdmin` | Admin operations | `getUsers()`, `updateUserStatus()`, `deleteUser()` |
+
+### API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/auth/login` | POST | User login |
+| `/api/auth/register` | POST | User registration |
+| `/api/products` | GET/POST | List/Create products |
+| `/api/products/:id` | GET/PUT | Get/Update product |
+| `/api/categories` | GET/POST | List/Create categories |
+| `/api/sellers` | GET | List sellers |
+| `/api/sellers/register-shop` | POST | Register new shop |
+| `/api/admin/users` | GET | List all users (admin) |
+
+### Authentication
+
+JWT tokens are automatically handled:
+- Token stored in `localStorage` after login
+- Axios interceptor adds `Authorization: Bearer <token>` to all requests
+- Automatic redirect to `/login` on 401 errors
 
 ---
 

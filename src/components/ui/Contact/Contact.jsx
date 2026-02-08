@@ -253,7 +253,6 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission
     alert("Terima kasih! Pesan Anda telah terkirim.");
     setFormData({ name: "", email: "", subject: "", message: "" });
   };
