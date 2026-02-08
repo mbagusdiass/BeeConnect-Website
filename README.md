@@ -86,8 +86,11 @@ npm run dev
     │   ├── 📂 Shipping-Details/
     │   │   └── 📄 ShippingDetails.jsx # 🚚 Shipping info
     │   │
-    │   └── 📂 Success-Paying/
-    │       └── 📄 SuccessPaying.jsx   # ✅ Payment success
+    │   ├── 📂 Success-Paying/
+    │   │   └── 📄 SuccessPaying.jsx   # ✅ Payment success
+    │   │
+    │   └── 📂 Unauthorized/
+    │       └── 📄 Unauthorized.jsx    # ❌ 404 Not Found
     │
     ├── 📂 pages/
     │   ├── 📄 HomePage.jsx            # 🏠 Home page
@@ -95,7 +98,8 @@ npm run dev
     │   ├── 📄 ShoppingCartPage.jsx    # 🛒 Cart page
     │   ├── 📄 CheckoutPage.jsx        # 💳 Checkout page
     │   ├── 📄 ShippingDetailPage.jsx  # 🚚 Shipping page
-    │   └── 📄 SuccessPayingPage.jsx   # ✅ Success page
+    │   ├── 📄 SuccessPayingPage.jsx   # ✅ Success page
+    │   └── 📄 UnauthorizedPage.jsx    # ❌ 404 page
     │
     └── 📂 hooks/
         └── 📄 useCart.js              # 🎣 Cart custom hook
@@ -138,6 +142,11 @@ npm run dev
 - 🔢 Order number & details
 - 🏠 Navigation buttons
 
+### ❌ 404 Page
+- ⚠️ Error icon & 404 code
+- 📝 "Page Not Found" message
+- ⬅️ Go Back & 🏠 Back to Home buttons
+
 ---
 
 ## 🛣️ Routes
@@ -151,6 +160,7 @@ npm run dev
 | `/checkout` | Checkout | 💳 Payment & delivery options |
 | `/shipping-details` | Shipping Details | 🚚 Review order |
 | `/success-paying` | Success | ✅ Payment confirmation |
+| `*` | Unauthorized | ❌ 404 Not Found (catch-all) |
 
 ### 🔄 User Flow
 
@@ -159,6 +169,8 @@ npm run dev
 │ Home │────▶│ Product │────▶│ Cart │────▶│ Checkout │────▶│ Shipping    │────▶│ Success │
 │  🏠  │     │   📦    │     │  🛒  │     │    💳    │     │     🚚      │     │   ✅    │
 └──────┘     └─────────┘     └──────┘     └──────────┘     └─────────────┘     └─────────┘
+                                                                                    
+                          Invalid URL → 404 Unauthorized Page ❌
 ```
 
 ---

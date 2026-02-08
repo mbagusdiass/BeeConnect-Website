@@ -6,18 +6,21 @@ import CheckoutPage from "./pages/CheckoutPage";
 import ShippingDetailsPage from "./pages/ShippingDetailPage";
 import SuccessPayingPage from "./pages/SuccessPayingPage";
 import InfoProductPage from "./pages/InfoProductPage";
+import UnauthorizedPage from "./pages/UnauthorizedPage";
 import "./App.css";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/product/:id" element={<InfoProductPage />} />
         <Route path="/cart" element={<ShoppingCartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/shipping-details" element={<ShippingDetailsPage />} />
         <Route path="/success-paying" element={<SuccessPayingPage />} />
+        <Route path="*" element={<UnauthorizedPage />} />
       </Routes>
     </Router>
   );
