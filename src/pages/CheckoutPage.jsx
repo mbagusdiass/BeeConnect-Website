@@ -5,7 +5,7 @@ import Checkout from "../components/ui/Checkout/Checkout";
 
 const CheckoutPage = () => {
   return (
-    <div className="checkout-page">
+    <div className="page">
       <TopBar />
 
       <main className="main-content">

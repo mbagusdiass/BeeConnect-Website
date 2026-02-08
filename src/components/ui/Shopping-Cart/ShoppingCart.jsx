@@ -4,14 +4,13 @@ import CartItem from "./CartItem";
 import OrderSummary from "./OrderSummary";
 
 const PageContainer = styled.div`
-  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 2rem 1.5rem;
   font-family:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
     Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background-color: #fff;
-  min-height: 100vh;
 `;
 
 const PageTitle = styled.h2`

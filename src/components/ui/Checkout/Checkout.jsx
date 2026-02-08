@@ -3,9 +3,8 @@ import styled from "styled-components";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 
 const Container = styled.div`
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 3rem 1rem;
+  width: 100%;
+  padding: 2rem 0;
   font-family:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
     Cantarell, "Open Sans", "Helvetica Neue", sans-serif;

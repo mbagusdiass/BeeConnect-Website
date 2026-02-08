@@ -7,8 +7,6 @@ const LayoutWrapper = styled.div`
   flex-direction: column;
   gap: 2rem;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
   font-family:
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
     sans-serif;

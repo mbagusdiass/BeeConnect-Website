@@ -8,7 +8,7 @@ const ShippingDetailsPage = () => {
   const { cartItems, total, checkout } = useCart();
 
   return (
-    <div className="shipping-details-page">
+    <div className="page">
       <TopBar />
 
       <main className="main-content">
