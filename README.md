@@ -1,138 +1,226 @@
-# Ravano Shop 🛒
+# 🛒 BeeConnect E-Commerce Frontend
 
-## 📖 Deskripsi
+<div align="center">
 
-**Ravano Shop** adalah aplikasi web E-Commerce modern yang dibangun menggunakan library **React** dan build tool **Vite**. Proyek ini difokuskan pada pengembangan antarmuka pengguna (Front-End) yang responsif, cepat, dan interaktif untuk pengalaman berbelanja online yang mulus.
+![React](https://img.shields.io/badge/React-19.2.4-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7.2.4-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Styled Components](https://img.shields.io/badge/Styled_Components-6.3.9-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-7.13.0-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
 
-## 🚀 Teknologi yang Digunakan
+**A modern, responsive e-commerce frontend built with React and Styled Components**
 
-Proyek ini dibangun menggunakan teknologi utama berikut:
+[🚀 Getting Started](#-getting-started) • [📁 Project Structure](#-project-structure) • [🎯 Features](#-features) • [🛣️ Routes](#️-routes)
 
-* **[React](https://reactjs.org/)** - Library JavaScript untuk membangun antarmuka pengguna.
-* **[Vite](https://vitejs.dev/)** - Build tool frontend generasi berikutnya yang super cepat.
-* **JavaScript (ES6+)** - Bahasa pemrograman utama.
-* **CSS / Styling** - (Dapat disesuaikan: Misalnya CSS Modules, Tailwind, atau Styled Components).
-* **ESLint** - Untuk menjaga kualitas dan konsistensi kode.
+</div>
 
-## ✨ Fitur Utama
+---
 
-Berikut adalah beberapa fitur yang tersedia dalam aplikasi ini:
+## 🚀 Getting Started
 
-* ✅ **Katalog Produk** - Menampilkan daftar produk dengan gambar dan harga.
-* ✅ **Detail Produk** - Halaman informasi lengkap untuk setiap item.
-* ✅ **Keranjang Belanja (Cart)** - Menambah dan mengelola item belanjaan.
-* ✅ **Responsif** - Tampilan yang optimal di Desktop, Tablet, dan Mobile.
-* ✅ **Navigasi Cepat** - Menggunakan routing sisi klien (SPA).
+### Prerequisites
 
-## 🛠️ Instalasi & Cara Menjalankan
+- **Node.js** >= 18.x
+- **npm** or **yarn**
 
-Ikuti langkah-langkah di bawah ini untuk menjalankan proyek ini di komputer lokal Anda:
+### Installation
 
-### Prasyarat
+```bash
+# Clone the repository
+git clone https://github.com/your-username/beeconnect-frontend.git
 
-Pastikan Anda sudah menginstal:
-* [Node.js](https://nodejs.org/) (Versi 16 atau lebih baru direkomendasikan)
-* npm atau yarn
+# Navigate to project directory
+cd beeconnect-frontend
 
-### Langkah-langkah
+# Install dependencies
+npm install
 
-1.  **Clone Repositori**
-    ```bash
-    git clone [https://github.com/ravano-2464/Ravano-Shop-FE.git](https://github.com/ravano-2464/Ravano-Shop-FE.git)
-    cd Ravano-Shop
-    ```
+# Start development server
+npm run dev
+```
 
-2.  **Instal Dependencies**
-    Masuk ke direktori proyek dan instal paket yang dibutuhkan:
-    ```bash
-    npm install
-    # atau jika menggunakan yarn
-    yarn install
-    ```
+### Available Scripts
 
-3.  **Jalankan Server Development**
-    Mulai aplikasi dalam mode development:
-    ```bash
-    npm run dev
-    # atau
-    yarn dev
-    ```
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | 🔥 Start development server |
+| `npm run build` | 📦 Build for production |
+| `npm run preview` | 👁️ Preview production build |
+| `npm run lint` | 🔍 Run ESLint |
 
-4.  **Buka di Browser**
-    Aplikasi biasanya akan berjalan di `http://localhost:5173`. Cek terminal Anda untuk port yang tepat.
+---
 
-## 📂 Struktur Folder
+## 📁 Project Structure
 
-```text
-├── 📁 .qodo
-│   ├── 📁 agents
-│   └── 📁 workflows
-├── 📁 public
-│   └── 🖼️ vite.svg
-├── 📁 src
-│   ├── 📁 assets
-│   │   └── 🖼️ react.svg
-│   ├── 📁 components
-│   │   ├── 📄 CartModal.jsx
-│   │   ├── 📄 DeleteConfirmationModal.jsx
-│   │   ├── 📄 Footer.jsx
-│   │   ├── 📄 Layout.jsx
-│   │   ├── 📄 LogoutConfirmationModal.jsx
-│   │   ├── 📄 Navbar.jsx
-│   │   ├── 📄 ProtectedRoute.jsx
-│   │   ├── 📄 QuantityModal.jsx
-│   │   ├── 📄 ReceiptModal.jsx
-│   │   └── 📄 TopUpModal.jsx
-│   ├── 📁 context
-│   │   ├── 📄 AuthContext.jsx
-│   │   ├── 📄 CartContext.jsx
-│   │   └── 📄 LanguageContext.jsx
-│   ├── 📁 hooks
-│   │   ├── 📁 Auth
-│   │   │   └── 📄 useAuth.js
-│   │   ├── 📁 Cart
-│   │   │   └── 📄 useCart.js
-│   │   └── 📁 Products
-│   │       └── 📄 useProducts.js
-│   ├── 📁 pages
-│   │   ├── 📄 DashboardMonitoring.jsx
-│   │   ├── 📄 Home.jsx
-│   │   ├── 📄 Login.jsx
-│   │   ├── 📄 NotFound.jsx
-│   │   ├── 📄 ProductDetail.jsx
-│   │   ├── 📄 ProductEdit.jsx
-│   │   ├── 📄 ProductForm.jsx
-│   │   ├── 📄 ProductList.jsx
-│   │   └── 📄 Register.jsx
-│   ├── 🎨 App.css
-│   ├── 📄 App.jsx
-│   ├── 🎨 index.css
-│   ├── 📄 main.jsx
-│   └── 📄 theme.js
-├── ⚙️ .eslintrc.json
-├── ⚙️ .gitignore
-├── ⚙️ .prettierrc
-├── 📝 README.md
-├── 📄 eslint.config.js
-├── 🌐 index.html
-├── ⚙️ package-lock.json
-├── ⚙️ package.json
-├── ⚙️ vercel.json
-└── 📄 vite.config.js
-````
+```
+📦 Frontend
+├── 📄 index.html
+├── 📄 package.json
+├── 📄 vite.config.js
+│
+└── 📂 src/
+    ├── 📄 main.jsx              # 🚀 Entry point
+    ├── 📄 App.jsx               # 🎯 Main app with routes
+    ├── 📄 App.css               # 🎨 Global styles
+    ├── 📄 index.css             # 🎨 Base styles
+    │
+    ├── 📂 assets/               # 🖼️ Static assets
+    │
+    ├── 📂 components/ui/
+    │   ├── 📄 Topbar.jsx              # 🔝 Fixed navigation bar
+    │   ├── 📄 Footer.jsx              # 📝 Footer component
+    │   │
+    │   ├── 📂 Home/
+    │   │   └── 📄 Home.jsx            # 🏠 Homepage (hero + products)
+    │   │
+    │   ├── 📂 Info-Product/
+    │   │   └── 📄 InfoProduct.jsx     # 📦 Product detail view
+    │   │
+    │   ├── 📂 Shopping-Cart/
+    │   │   ├── 📄 ShoppingCart.jsx    # 🛒 Cart container
+    │   │   ├── 📄 CartItem.jsx        # 📦 Cart item
+    │   │   └── 📄 OrderSummary.jsx    # 💰 Order summary
+    │   │
+    │   ├── 📂 Checkout/
+    │   │   └── 📄 Checkout.jsx        # 💳 Checkout form
+    │   │
+    │   ├── 📂 Shipping-Details/
+    │   │   └── 📄 ShippingDetails.jsx # 🚚 Shipping info
+    │   │
+    │   ├── 📂 Success-Paying/
+    │   │   └── 📄 SuccessPaying.jsx   # ✅ Payment success
+    │   │
+    │   └── 📂 Unauthorized/
+    │       └── 📄 Unauthorized.jsx    # ❌ 404 Not Found
+    │
+    ├── 📂 pages/
+    │   ├── 📄 HomePage.jsx            # 🏠 Home page
+    │   ├── 📄 InfoProductPage.jsx     # 📦 Product detail page
+    │   ├── 📄 ShoppingCartPage.jsx    # 🛒 Cart page
+    │   ├── 📄 CheckoutPage.jsx        # 💳 Checkout page
+    │   ├── 📄 ShippingDetailPage.jsx  # 🚚 Shipping page
+    │   ├── 📄 SuccessPayingPage.jsx   # ✅ Success page
+    │   └── 📄 UnauthorizedPage.jsx    # ❌ 404 page
+    │
+    └── 📂 hooks/
+        └── 📄 useCart.js              # 🎣 Cart custom hook
+```
 
-## 🤝 Kontribusi
+---
 
-Kontribusi selalu diterima\! Jika Anda ingin berkontribusi:
+## 🎯 Features
 
-1.  Fork repositori ini.
-2.  Buat branch fitur baru (`git checkout -b fitur-keren`).
-3.  Commit perubahan Anda (`git commit -m 'Menambahkan fitur keren'`).
-4.  Push ke branch tersebut (`git push origin fitur-keren`).
-5.  Buat Pull Request.
+### 🏠 Home Page
+- 🎬 Hero section with iPhone 14 Pro showcase
+- 📂 Category tabs (All, Fashion, Books, Electronics)
+- 🔥 Popular products grid (clickable)
 
-## 📝 Lisensi
+### 📦 Product Detail
+- 🖼️ Large product image with wishlist button
+- 📷 Thumbnail gallery
+- ⭐ Rating & reviews count
+- 📝 Description with "Read all"
+- 🛒 "Ask Seller" & "Add to Cart" buttons
 
-Proyek ini dilisensikan di bawah [MIT License](https://www.google.com/search?q=LICENSE).
+### 🛒 Shopping Cart
+- ➕ Add/remove items with quantity controls
+- 💰 Real-time total calculation
+- ✅ Checkout button → redirects to /checkout
 
-Dibuat dengan ❤️ oleh [Ravano-2464](https://www.google.com/search?q=https://github.com/ravano-2464)
+### 💳 Checkout
+- 📍 Address selection with edit/delete
+- 🚚 Delivery method options
+- 💳 Payment methods (Bank, E-Wallet, Credit Card)
+- ⬅️ Back & ➡️ Next buttons
+
+### 🚚 Shipping Details
+- 📋 Order summary review
+- 📦 Product list with quantities
+- ✅ Confirm Payment → redirects to success
+
+### ✅ Success Page
+- 🎉 Payment confirmation message
+- 🔢 Order number & details
+- 🏠 Navigation buttons
+
+### ❌ 404 Page
+- ⚠️ Error icon & 404 code
+- 📝 "Page Not Found" message
+- ⬅️ Go Back & 🏠 Back to Home buttons
+
+---
+
+## 🛣️ Routes
+
+| Route | Page | Description |
+|-------|------|-------------|
+| `/` | Home | 🏠 Landing page |
+| `/home` | Home | 🏠 Alternative home URL |
+| `/product/:id` | Product Detail | 📦 View product info |
+| `/cart` | Shopping Cart | 🛒 View cart items |
+| `/checkout` | Checkout | 💳 Payment & delivery options |
+| `/shipping-details` | Shipping Details | 🚚 Review order |
+| `/success-paying` | Success | ✅ Payment confirmation |
+| `*` | Unauthorized | ❌ 404 Not Found (catch-all) |
+
+### 🔄 User Flow
+
+```
+┌──────┐     ┌─────────┐     ┌──────┐     ┌──────────┐     ┌─────────────┐     ┌─────────┐
+│ Home │────▶│ Product │────▶│ Cart │────▶│ Checkout │────▶│ Shipping    │────▶│ Success │
+│  🏠  │     │   📦    │     │  🛒  │     │    💳    │     │     🚚      │     │   ✅    │
+└──────┘     └─────────┘     └──────┘     └──────────┘     └─────────────┘     └─────────┘
+                                                                                    
+                          Invalid URL → 404 Unauthorized Page ❌
+```
+
+---
+
+## 🧭 Navigation (Topbar)
+
+| Link | Route | Active When |
+|------|-------|-------------|
+| **Brand** | `/` | - |
+| **Home** | `/home` | `/` or `/home` |
+| **Cart** | `/cart` | `/cart`, `/checkout`, `/shipping-details`, `/success-paying` |
+| **Profile** | `/profile` | `/profile` |
+| **Contact us** | `/contact` | `/contact` |
+
+- 📌 **Fixed Position**: Topbar always stays at top when scrolling
+- 🎯 **Active State**: Current page link is bold & black
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| ⚛️ **React 19** | UI Library |
+| ⚡ **Vite 7** | Build Tool |
+| 💅 **Styled Components** | CSS-in-JS |
+| 🧭 **React Router 7** | Navigation |
+| 🎨 **Lucide React** | Icons |
+| 📡 **Axios** | HTTP Client |
+
+---
+
+## 📱 Responsive Design
+
+| Device | Breakpoint |
+|--------|------------|
+| 📱 Mobile | < 768px |
+| 📱 Tablet | 768px - 1024px |
+| 💻 Desktop | > 1024px |
+
+---
+
+## 📄 License
+
+MIT License
+
+---
+
+<div align="center">
+
+**Made with ❤️ by BeeConnect Team**
+
+</div>
