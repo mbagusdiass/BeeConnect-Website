@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem";
 import OrderSummary from "./OrderSummary";
 
@@ -39,6 +40,12 @@ const ItemsList = styled.div`
 `;
 
 const ShoppingCart = () => {
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    navigate("/checkout");
+  };
+
   const items = [
     {
       id: 1,
@@ -79,7 +86,7 @@ const ShoppingCart = () => {
         </div>
 
         <div style={{ marginTop: "1rem" }}>
-          <OrderSummary total="Rp.60.000,00" onCheckout={() => {}} />
+          <OrderSummary total="Rp.60.000,00" onCheckout={handleCheckout} />
         </div>
       </LayoutGrid>
     </PageContainer>

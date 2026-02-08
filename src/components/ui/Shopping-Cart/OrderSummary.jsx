@@ -95,18 +95,4 @@ const OrderSummary = ({ total, onCheckout }) => {
   );
 };
 
-const App = () => {
-  return (
-    <>
-      <GlobalStyle />
-      <Container>
-        <OrderSummary
-          total="Rp.60.000,00"
-          onCheckout={() => alert("Proceeding to checkout!")}
-        />
-      </Container>
-    </>
-  );
-};
-
-export default App;
+export default OrderSummary;

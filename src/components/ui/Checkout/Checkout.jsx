@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 
 const Container = styled.div`
@@ -176,7 +177,7 @@ const LogoPlaceholder = styled.div`
 
 const ButtonGroup = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: 4rem;
   gap: 1rem;
 `;
@@ -211,9 +212,18 @@ const NextBtn = styled.button`
 `;
 
 const Checkout = () => {
+  const navigate = useNavigate();
   const [selectedAddress, setSelectedAddress] = useState("home");
   const [selectedDelivery, setSelectedDelivery] = useState("standard");
   const [selectedPayment, setSelectedPayment] = useState("bank");
+
+  const handleBack = () => {
+    navigate(-1);
+  };
+
+  const handleNext = () => {
+    navigate("/shipping-details");
+  };
 
   return (
     <Container>
@@ -327,8 +337,8 @@ const Checkout = () => {
       </Section>
 
       <ButtonGroup>
-        <BackBtn>Back</BackBtn>
-        <NextBtn>Next</NextBtn>
+        <BackBtn onClick={handleBack}>Back</BackBtn>
+        <NextBtn onClick={handleNext}>Next</NextBtn>
       </ButtonGroup>
     </Container>
   );
