@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link, useLocation } from "react-router-dom";
 import { Search } from "lucide-react";
 
 const Container = styled.div`
@@ -19,7 +20,7 @@ const Container = styled.div`
     Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 `;
 
-const BrandText = styled.h1`
+const BrandLink = styled(Link)`
   font-size: 1.5rem;
   font-weight: 800;
   color: #000;
@@ -27,6 +28,11 @@ const BrandText = styled.h1`
   padding: 0;
   letter-spacing: -0.5px;
   flex-shrink: 0;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const SearchSection = styled.div`
@@ -76,7 +82,7 @@ const NavLinks = styled.nav`
   flex-shrink: 0;
 `;
 
-const NavItem = styled.a`
+const NavItem = styled(Link)`
   text-decoration: none;
   font-size: 0.95rem;
   color: ${(props) => (props.$active ? "#000" : "#999")};
@@ -90,9 +96,19 @@ const NavItem = styled.a`
 `;
 
 const TopBar = () => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  const isActive = (path) => {
+    if (path === "/") {
+      return currentPath === "/" || currentPath === "/home";
+    }
+    return currentPath === path || currentPath.startsWith(path);
+  };
+
   return (
     <Container>
-      <BrandText>Brand</BrandText>
+      <BrandLink to="/">Brand</BrandLink>
 
       <SearchSection>
         <SearchWrapper>
@@ -104,15 +120,22 @@ const TopBar = () => {
       </SearchSection>
 
       <NavLinks>
-        <NavItem href="#">Home</NavItem>
-        <NavItem href="#" $active={true}>
+        <NavItem to="/" $active={isActive("/")}>
+          Home
+        </NavItem>
+        <NavItem to="/cart" $active={isActive("/cart")}>
           Cart
         </NavItem>
-        <NavItem href="#">Profile</NavItem>
-        <NavItem href="#">Contact us</NavItem>
+        <NavItem to="/profile" $active={isActive("/profile")}>
+          Profile
+        </NavItem>
+        <NavItem to="/contact" $active={isActive("/contact")}>
+          Contact us
+        </NavItem>
       </NavLinks>
     </Container>
   );
 };
 
 export default TopBar;
+
